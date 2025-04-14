@@ -16,6 +16,7 @@ form.addEventListener('submit', onHandleSubmit);
 async function onHandleSubmit(event) {
   let page = 1;
   event.preventDefault();
+  hideLoadMoreButton();
   clearGallery();
   const inputedValue = form.elements[0].value.trim();
   showLoader();
