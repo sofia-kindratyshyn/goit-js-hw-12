@@ -2,6 +2,7 @@
 import SimpleLightbox from 'simplelightbox';
 // Додатковий імпорт стилів
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import getImagesByQuery from './pixabay-api';
 
 const gallery = document.querySelector('.gallery');
 export const galBox = new SimpleLightbox('.gallery a', {
@@ -62,4 +63,27 @@ export function showLoadMoreButton() {
 
 export function hideLoadMoreButton() {
   button.classList.remove('is-active');
+}
+
+export function loadMoreFunc(inputedValue) {
+  let page = 1;
+
+  const loadMoreBtn = document.querySelector('.non-active');
+  loadMoreBtn.addEventListener('click', onHandleClick);
+  function onHandleClick() {
+    page += 1;
+
+    getImagesByQuery(inputedValue, page);
+    const firstItem = document.querySelector('li');
+    if (!firstItem) return;
+    const height = firstItem.getBoundingClientRect().height;
+
+    setTimeout(() => {
+      window.scrollBy({
+        top: height * 2,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }, 500);
+  }
 }
